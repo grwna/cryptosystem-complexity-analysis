@@ -6,14 +6,6 @@ def modulus_and_phi(p, q):
     phi_n = (p - 1) * (q - 1)
     return n, phi_n
 
-def mod_inverse(a, m):
-    m0, x0, x1 = m, 0, 1
-    while a > 1:
-        q = a // m
-        a, m = m, a % m
-        x0, x1 = x1 - q * x0, x0
-    return x1 + m0 if x1 < 0 else x1
-
 def generate_rsa_keys(bits=128):
     p = generate_prime(bits // 2)
     q = generate_prime(bits // 2)
@@ -51,9 +43,9 @@ def rsa_encryption_runtime(bits=128):
 
     print(f"Key Generation Time: {keygen_time:.9f} seconds")
     print(f"Encryption Time: {encryption_time:.9f} seconds")
-
-    write = f"C = {ciphertext}\n\nd = {private_key[0]}\n\nKey Generation Time: {keygen_time:.9f} seconds\nEncryption Time: {encryption_time:.9f} seconds"
-    write_file(f"ciphertext-rsa-{bits}.txt", write)
+    
+    write = f"d = {private_key[0]}\n\nC = {ciphertext}\n\nKey Generation Time: {keygen_time:.9f} seconds\nEncryption Time: {encryption_time:.9f} seconds"
+    write_file(f"rsa/ciphertext-rsa-{bits}.txt", write)
 
     return ciphertext, private_key
 
@@ -65,7 +57,7 @@ def rsa_decryption_runtime(bits, private_key, ciphertext):
     print(f"Decryption Time: {decryption_time:.9f} seconds")
 
     write = f"P = {plaintext}\n\nDecryption Time: {decryption_time:.9f} seconds"
-    write_file(f"decrypted-rsa-{bits}.txt", write )
+    write_file(f"rsa/decrypted-rsa-{bits}.txt", write )
 
 if __name__ == "__main__":
     key_sizes = [128, 192, 256]

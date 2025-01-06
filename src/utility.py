@@ -51,13 +51,21 @@ def mod_exp(base, exp, mod):
         exp //= 2
     return result
 
-def read_file(filename):
-    with open("test/" + filename, 'r') as file:
+def mod_inverse(a, m):
+    m0, x0, x1 = m, 0, 1
+    while a > 1:
+        q = a // m
+        a, m = m, a % m
+        x0, x1 = x1 - q * x0, x0
+    return x1 + m0 if x1 < 0 else x1
+
+def read_file(filename, mode='r'):
+    with open("test/" + filename, mode) as file:
         content = file.readline().strip()
     return content
 
-def write_file(filename, content):
-    with open("test/" + filename, 'w') as file:
+def write_file(filename, content, mode='w'):
+    with open("test/" + filename, mode) as file:
         file.write(content)
 
 if __name__ == "__main__":
